@@ -15,7 +15,7 @@ def create_data():
     # tensor with X values
     X = torch.arange(start, end, step).unsqueeze(dim=1)
     # tensor with Y values, multiplies all X values by weight and adds bias
-    Y = weight * X + bias
+    Y = (weight * X) ** 2 + bias
     return X, Y
 
 # split size tells you how much of the data should be used for training 
@@ -61,7 +61,7 @@ class LinearRegressionModel(nn.Module):
 
     # Forward defines the computation in the model
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.weights * x + self.bias
+        return (self.weights * x) ** 2 + self.bias
     
 
 ###########################################################################
@@ -114,7 +114,7 @@ def run_all():
     plot_predictions('Predictions before training', X_train, Y_train, X_test, Y_test, Y_preds)
 
     # CRUCIAL! Train the model
-    train(model_0, X_train, Y_train, learning_rate=0.01, epochs=300)
+    train(model_0, X_train, Y_train, learning_rate=0.02, epochs=100)
 
     # Evaluate the model after training
     model_0.eval()
