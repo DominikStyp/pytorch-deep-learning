@@ -36,12 +36,12 @@ def create_and_split_data():
 
     return X_train, Y_train, X_test, Y_test
 
-def plot_predictions(title, X_train, Y_train, X_test, Y_test, predictions):
+def plot_predictions(title, X_train, Y_train, X_test, Y_test, Y_predictions):
     # Plot the training data, testing data, and predictions
     plt.figure(figsize=(10, 6))
     plt.scatter(X_train, Y_train, color='blue', label='Training Data')
     plt.scatter(X_test, Y_test, color='orange', label='Testing Data')
-    plt.scatter(X_test, predictions, color='red', label='Predictions')
+    plt.scatter(X_test, Y_predictions, color='red', label='Predictions')
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.title(title)
@@ -108,10 +108,10 @@ def run_all():
     # Check predictions of the model without training
     # inference_mode is used to disable gradient tracking, which is useful for inference
     with torch.inference_mode(): 
-        y_preds = model_0(X_test)
+        Y_preds = model_0(X_test)
 
     # Plot untrained model predictions
-    plot_predictions('Predictions before training', X_train, Y_train, X_test, Y_test, y_preds)
+    plot_predictions('Predictions before training', X_train, Y_train, X_test, Y_test, Y_preds)
 
     # CRUCIAL! Train the model
     train(model_0, X_train, Y_train, learning_rate=0.01, epochs=300)
@@ -121,10 +121,10 @@ def run_all():
 
     # Get predictions after training
     with torch.inference_mode():
-        y_preds = model_0(X_test)
+        Y_preds = model_0(X_test)
         
     # Plot trained model predictions
-    plot_predictions('Predictions after training', X_train, Y_train, X_test, Y_test, y_preds)
+    plot_predictions('Predictions after training', X_train, Y_train, X_test, Y_test, Y_preds)
 
 
 
